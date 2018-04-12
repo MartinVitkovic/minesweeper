@@ -110,28 +110,6 @@ public class ConsoleUI implements UserInterface {
 			System.out.println(ex.getMessage());
 		}
 
-		// Pattern p = Pattern.compile("(O|M)([A-I])([0-8])");
-		// Matcher matcher = p.matcher(input);
-		//
-		// if (input.equals("X")) {
-		// System.out.println("Ukoncil si hru");
-		// System.exit(0);
-		// } else if (matcher.matches()) {
-		// String command = matcher.group(1);
-		// String row = matcher.group(2);
-		// String column = matcher.group(3);
-		//
-		// int rowOfField = row.charAt(0) - 65;
-		//
-		// if (command.equals("M")) {
-		// field.markTile(rowOfField, (Integer.parseInt(column) - 1));
-		// } else if (command.equals("O")) {
-		// field.openTile(rowOfField, (Integer.parseInt(column) - 1));
-		// }
-		//
-		// } else {
-		// System.err.println("Zadal si zly vstup");
-		// }
 	}
 
 	private void handleInput(String input) throws WrongFormatException {
