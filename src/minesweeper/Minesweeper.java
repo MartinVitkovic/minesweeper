@@ -13,7 +13,7 @@ public class Minesweeper {
 	private UserInterface userInterface;
 
 	/**
-	 * Constructor.
+	 * Constructooor.
 	 */
 	private Minesweeper() {
 		 userInterface = new ConsoleUI();
@@ -21,10 +21,10 @@ public class Minesweeper {
 		Field field = new Field(9, 9, 10);
 		//printField(field);
 		userInterface.newGameStarted(field);
+		System.out.println("Hra skoncila");
 	}
 
 	/*
-	 * private void printField(Field field) { for (int row = 0; row <
 	 * field.getRowCount(); row++) { for (int col = 0; col < field.getColumnCount();
 	 * col++) { Tile tile = field.getTile(row, col); if (tile.getState() ==
 	 * Tile.State.OPEN) { if (tile instanceof Clue) { System.out.print(((Clue)
