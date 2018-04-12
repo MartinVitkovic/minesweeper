@@ -12,6 +12,7 @@ import minesweeper.core.Clue;
 import minesweeper.core.Field;
 import minesweeper.core.GameState;
 import minesweeper.core.Tile;
+import minesweeper.consoleui.WrongFormatException;
 
 /**
  * Console user interface.
@@ -90,6 +91,7 @@ public class ConsoleUI implements UserInterface {
 			}
 			System.out.println();
 		}
+		System.out.println("Pocet neoznacenych min:" + field.getRemainingMineCount());
 	}
 
 	/**
@@ -97,50 +99,65 @@ public class ConsoleUI implements UserInterface {
 	 * playing field according to input string.
 	 */
 	private void processInput() {
-		int rowOfField = 0;
 
 		System.out.println("X – ukoncenie hry\n" + "MA1 – oznacenie dlazdice v riadku A a stlpci 1\n"
 				+ "OB4 – odkrytie dlazdice v riadku B a stlpci 4");
 		String input = readLine().toUpperCase();
-
-		if (input.equals("X")) {
-			System.exit(0);
+		try {
+			handleInput(input);
+		} catch (WrongFormatException ex) {
+			// TODO: handle exception
+			System.out.println(ex.getMessage());
 		}
+
+		// Pattern p = Pattern.compile("(O|M)([A-I])([0-8])");
+		// Matcher matcher = p.matcher(input);
+		//
+		// if (input.equals("X")) {
+		// System.out.println("Ukoncil si hru");
+		// System.exit(0);
+		// } else if (matcher.matches()) {
+		// String command = matcher.group(1);
+		// String row = matcher.group(2);
+		// String column = matcher.group(3);
+		//
+		// int rowOfField = row.charAt(0) - 65;
+		//
+		// if (command.equals("M")) {
+		// field.markTile(rowOfField, (Integer.parseInt(column) - 1));
+		// } else if (command.equals("O")) {
+		// field.openTile(rowOfField, (Integer.parseInt(column) - 1));
+		// }
+		//
+		// } else {
+		// System.err.println("Zadal si zly vstup");
+		// }
+	}
+
+	private void handleInput(String input) throws WrongFormatException {
 
 		Pattern p = Pattern.compile("(O|M)([A-I])([0-8])");
 		Matcher matcher = p.matcher(input);
-		if (matcher.matches()) {
+
+		if (input.equals("X")) {
+			System.exit(0);
+		} else if (matcher.matches()) {
 			String command = matcher.group(1);
 			String row = matcher.group(2);
 			String column = matcher.group(3);
 
-			if (row.equals("A")) {
-				rowOfField = 1;
-			} else if (row.equals("B")) {
-				rowOfField = 5;
-			} else if (row.equals("C")) {
-				rowOfField = 3;
-			} else if (row.equals("D")) {
-				rowOfField = 4;
-			} else if (row.equals("E")) {
-				rowOfField = 5;
-			} else if (row.equals("F")) {
-				rowOfField = 6;
-			} else if (row.equals("G")) {
-				rowOfField = 7;
-			} else if (row.equals("H")) {
-				rowOfField = 8;
-			}
+			int rowOfField = row.charAt(0) - 65;
 
+			// try {
 			if (command.equals("M")) {
-				field.markTile(rowOfField-1, (Integer.parseInt(column)-1));
+				field.markTile(rowOfField, (Integer.parseInt(column) - 1));
 			} else if (command.equals("O")) {
-				field.openTile(rowOfField-1, (Integer.parseInt(column)-1));
+				field.openTile(rowOfField, (Integer.parseInt(column) - 1));
 			}
 
 		} else {
-			System.err.println("Zadal si zly vstup");
+			throw new WrongFormatException("Zadal si zly vstup");
 		}
-
 	}
+
 }

@@ -2,6 +2,8 @@ package minesweeper.core;
 
 import java.util.Random;
 
+import minesweeper.core.Tile.State;
+
 /**
  * Field represents playing field and game logic.
  */
@@ -197,26 +199,6 @@ public class Field {
 		return count;
 	}
 
-	public int getRowCount() {
-		return rowCount;
-	}
-
-	public int getColumnCount() {
-		return columnCount;
-	}
-
-	public int getMineCount() {
-		return mineCount;
-	}
-
-	public GameState getState() {
-		return state;
-	}
-
-	public Tile getTile(int row, int column) {
-		return tiles[row][column];
-	}
-
 	private void openAdjacentTiles(int row, int column) {
 		for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
 			int actRow = row + rowOffset;
@@ -238,6 +220,30 @@ public class Field {
 				}
 			}
 		}
+	}
+
+	public int getRemainingMineCount() {
+		return mineCount - getNumberOf(State.MARKED);
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public int getColumnCount() {
+		return columnCount;
+	}
+
+	public int getMineCount() {
+		return mineCount;
+	}
+
+	public GameState getState() {
+		return state;
+	}
+
+	public Tile getTile(int row, int column) {
+		return tiles[row][column];
 	}
 
 }
