@@ -101,14 +101,14 @@ public class ConsoleUI implements UserInterface {
 
 		System.out.println("X – ukoncenie hry\n" + "MA1 – oznacenie dlazdice v riadku A a stlpci 1\n"
 				+ "OB4 – odkrytie dlazdice v riadku B a stlpci 4");
-		String input = readLine();
+		String input = readLine().toUpperCase();
 
-		if (input.equals("X") ||input.equals("x") ) {
+		if (input.equals("X")) {
 			System.exit(0);
 		}
 
 		Pattern p = Pattern.compile("(O|M)([A-I])([0-8])");
-		Matcher matcher = p.matcher(input.toUpperCase());
+		Matcher matcher = p.matcher(input);
 		if (matcher.matches()) {
 			String command = matcher.group(1);
 			String row = matcher.group(2);
@@ -117,7 +117,7 @@ public class ConsoleUI implements UserInterface {
 			if (row.equals("A")) {
 				rowOfField = 1;
 			} else if (row.equals("B")) {
-				rowOfField = 2;
+				rowOfField = 5;
 			} else if (row.equals("C")) {
 				rowOfField = 3;
 			} else if (row.equals("D")) {
@@ -133,9 +133,9 @@ public class ConsoleUI implements UserInterface {
 			}
 
 			if (command.equals("M")) {
-				field.markTile(rowOfField, Integer.parseInt(column));
+				field.markTile(rowOfField-1, (Integer.parseInt(column)-1));
 			} else if (command.equals("O")) {
-				field.openTile(rowOfField, Integer.parseInt(column));
+				field.openTile(rowOfField-1, (Integer.parseInt(column)-1));
 			}
 
 		} else {
