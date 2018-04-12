@@ -47,8 +47,8 @@ public class ConsoleUI implements UserInterface {
 	public void newGameStarted(Field field) {
 		this.field = field;
 		do {
-			update();
 			processInput();
+			update();
 
 			if (field.getState() == GameState.SOLVED) {
 				System.out.println("Hra vyhrata");
@@ -91,7 +91,7 @@ public class ConsoleUI implements UserInterface {
 			}
 			System.out.println();
 		}
-		System.out.println("Pocet neoznacenych min:" + field.getRemainingMineCount());
+		System.out.println("Pocet neoznacenych min: " + field.getRemainingMineCount());
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class ConsoleUI implements UserInterface {
 
 		System.out.println("X – ukoncenie hry\n" + "MA1 – oznacenie dlazdice v riadku A a stlpci 1\n"
 				+ "OB4 – odkrytie dlazdice v riadku B a stlpci 4");
-		String input = readLine().toUpperCase();
+		String input = readLine().trim().toUpperCase();
 		try {
 			handleInput(input);
 		} catch (WrongFormatException ex) {
