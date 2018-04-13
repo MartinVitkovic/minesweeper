@@ -208,18 +208,13 @@ public class Field {
 					if (actColumn >= 0 && actColumn < columnCount) {
 
 						// otvor ak clue = 0
-						if (tiles[actRow][actColumn].getState() == Tile.State.CLOSED) {
-							if (tiles[actRow][actColumn] instanceof Clue) {
-								Clue clue = (Clue) tiles[actRow][actColumn];
-								if ((clue.getValue()) == 0) {
-									openTile(actRow, actColumn);
-								}
-							}
-						}
+						openTile(actRow, actColumn);
+
 					}
 				}
 			}
 		}
+
 	}
 
 	public int getRemainingMineCount() {

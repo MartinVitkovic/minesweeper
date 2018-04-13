@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
 import minesweeper.core.Clue;
 import minesweeper.core.Field;
@@ -47,8 +48,8 @@ public class ConsoleUI implements UserInterface {
 	public void newGameStarted(Field field) {
 		this.field = field;
 		do {
-			processInput();
 			update();
+			processInput();
 
 			if (field.getState() == GameState.SOLVED) {
 				System.out.println("Hra vyhrata");
@@ -56,6 +57,7 @@ public class ConsoleUI implements UserInterface {
 			}
 
 			if (field.getState() == GameState.FAILED) {
+				update();
 				System.out.println("Hra prehrata");
 				System.exit(0);
 			}
@@ -70,21 +72,28 @@ public class ConsoleUI implements UserInterface {
 	 */
 	@Override
 	public void update() {
+		Minesweeper minesweeper = Minesweeper.getInstance();
+		System.out.printf("  ");
+		for (int i = 0; i < field.getColumnCount(); i++) {
+			System.out.printf("%d ", i + 1);
+		}
+		System.out.println();
 		for (int row = 0; row < field.getRowCount(); row++) {
+			System.out.printf("%c ", row + 65);
 			for (int col = 0; col < field.getColumnCount(); col++) {
 				Tile tile = field.getTile(row, col);
 				switch (tile.getState()) {
 				case CLOSED:
-					System.out.print("-");
+					System.out.print("- ");
 					break;
 				case MARKED:
-					System.out.print("M");
+					System.out.print("M ");
 					break;
 				case OPEN:
 					if (tile instanceof Clue) {
-						System.out.print(((Clue) tile).getValue());
+						System.out.print(((Clue) tile).getValue() + " ");
 					} else {
-						System.out.print("X");
+						System.out.print("X ");
 					}
 					break;
 				}
@@ -92,6 +101,7 @@ public class ConsoleUI implements UserInterface {
 			System.out.println();
 		}
 		System.out.println("Pocet neoznacenych min: " + field.getRemainingMineCount());
+		System.out.println("Aktualny hraci cas: " + minesweeper.getPlayingSeconds());
 	}
 
 	/**
@@ -125,12 +135,23 @@ public class ConsoleUI implements UserInterface {
 			String column = matcher.group(3);
 
 			int rowOfField = row.charAt(0) - 65;
+			int columnOfField = Integer.parseInt(column);
+
+			// if ((rowOfField < field.getRowCount()) || (rowOfField > field.getRowCount()))
+			// {
+			// throw new WrongFormatException("Zadal si zly pocet riadkov");
+			// }
+			//
+			// if ((columnOfField < field.getColumnCount()) || columnOfField >
+			// field.getColumnCount()) {
+			// throw new WrongFormatException("Zadal si zly pocet stlpcov");
+			// }
 
 			// try {
 			if (command.equals("M")) {
-				field.markTile(rowOfField, (Integer.parseInt(column) - 1));
+				field.markTile(rowOfField, columnOfField - 1);
 			} else if (command.equals("O")) {
-				field.openTile(rowOfField, (Integer.parseInt(column) - 1));
+				field.openTile(rowOfField, columnOfField - 1);
 			}
 
 		} else {
