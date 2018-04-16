@@ -89,8 +89,8 @@ public class BestTimes implements Iterable<BestTimes.PlayerTime> {
 			this.time = time;
 		}
 
-		@Override
-		public int compareTo(PlayerTime o) {
+
+		public int compareTo(PlayerTime o) {			
 			if (getTime() < o.getTime()) {
 				return -1;
 			} else if (getTime() == o.getTime()) {
@@ -98,6 +98,7 @@ public class BestTimes implements Iterable<BestTimes.PlayerTime> {
 			} else {
 				return 1;
 			}
+
 		}
 
 	}

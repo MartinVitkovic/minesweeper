@@ -3,9 +3,15 @@ package minesweeper.consoleui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
@@ -47,18 +53,24 @@ public class ConsoleUI implements UserInterface {
 	@Override
 	public void newGameStarted(Field field) {
 		this.field = field;
+		String userName = System.getProperty("user.name");
+		Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+        String date = sdf.format(cal.getTime());
+		System.out.println("Welcome " + userName + "!");
+		System.out.println("Dnes je " + date);
 		do {
 			update();
 			processInput();
 
 			if (field.getState() == GameState.SOLVED) {
-				System.out.println("Hra vyhrata");
+				System.out.println("Hra vyhrata!");
 				System.exit(0);
 			}
 
 			if (field.getState() == GameState.FAILED) {
 				update();
-				System.out.println("Hra prehrata");
+				System.out.println("Hra prehrata!");
 				System.exit(0);
 			}
 
@@ -73,7 +85,7 @@ public class ConsoleUI implements UserInterface {
 	@Override
 	public void update() {
 		Minesweeper minesweeper = Minesweeper.getInstance();
-		System.out.printf("  ");
+		System.out.printf(" ");
 		for (int i = 0; i < field.getColumnCount(); i++) {
 			System.out.printf("%d ", i + 1);
 		}
@@ -102,6 +114,9 @@ public class ConsoleUI implements UserInterface {
 		}
 		System.out.println("Pocet neoznacenych min: " + field.getRemainingMineCount());
 		System.out.println("Aktualny hraci cas: " + minesweeper.getPlayingSeconds());
+		System.out.println("X – ukoncenie hry\n" + "MA1 – oznacenie dlazdice v riadku A a stlpci 1\n"
+				+ "OB4 – odkrytie dlazdice v riadku B a stlpci 4");
+		System.out.println("Zadaj prikaz: ");
 	}
 
 	/**
@@ -110,8 +125,7 @@ public class ConsoleUI implements UserInterface {
 	 */
 	private void processInput() {
 
-		System.out.println("X – ukoncenie hry\n" + "MA1 – oznacenie dlazdice v riadku A a stlpci 1\n"
-				+ "OB4 – odkrytie dlazdice v riadku B a stlpci 4");
+
 		String input = readLine().trim().toUpperCase();
 		try {
 			handleInput(input);

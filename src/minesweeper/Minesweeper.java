@@ -22,9 +22,8 @@ public class Minesweeper {
 		instance = this;
 		userInterface = new ConsoleUI();
 
-		Field field = new Field(8, 8, 6);
+		Field field = new Field(9, 9, 10);
 		userInterface.newGameStarted(field);
-		System.out.println("Hra sa skoncila");
 	}
 
 	public int getPlayingSeconds() {
