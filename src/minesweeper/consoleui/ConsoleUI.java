@@ -53,10 +53,15 @@ public class ConsoleUI implements UserInterface {
 	@Override
 	public void newGameStarted(Field field) {
 		this.field = field;
+		
+		//username
 		String userName = System.getProperty("user.name");
+		
+		//time
 		Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
         String date = sdf.format(cal.getTime());
+        
 		System.out.println("Welcome " + userName + "!");
 		System.out.println("Dnes je " + date);
 		do {
@@ -85,13 +90,20 @@ public class ConsoleUI implements UserInterface {
 	@Override
 	public void update() {
 		Minesweeper minesweeper = Minesweeper.getInstance();
-		System.out.printf(" ");
+		
+		//vypis cisel
+		System.out.printf("  ");
 		for (int i = 0; i < field.getColumnCount(); i++) {
 			System.out.printf("%d ", i + 1);
 		}
 		System.out.println();
+		
+		//zacina vypis poli
 		for (int row = 0; row < field.getRowCount(); row++) {
+			//vypis pismena
 			System.out.printf("%c ", row + 65);
+			
+			//pokracuje vypis poli
 			for (int col = 0; col < field.getColumnCount(); col++) {
 				Tile tile = field.getTile(row, col);
 				switch (tile.getState()) {
